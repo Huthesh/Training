@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+
+	/*Without Promises*/
+	/* $(document).ready(function(){
+        $("#messageOne").html("Document is ready");
+		$.get("1.json",function(data){
+			console.log("data received");
+			$("#messageTwo").html(JSON.stringify(data));
+			$.get("2.json",function(data){
+				console.log("data received");
+				$("#messageThree").html(JSON.stringify(data));
+				$.get("3.json",function(data){
+					console.log("data received");
+					$("#messageFour").html(JSON.stringify(data));
+				});
+			});
+		});
+	}); */
+	
+	/*With Promises*/
+	
+	/* $(document).ready(function(){
+		$.get("1.json").then(function(data){
+			console.log("data one received");
+			$("#messageTwo").html(JSON.stringify(data));
+			return $.get("2.json");
+		}).then(function(data){
+			console.log("data two received");
+			$("#messageThree").html(JSON.stringify(data));
+			return $.get("3.json");
+		}).then(function(data){
+			console.log("data Three received");
+			$("#messageFour").html(JSON.stringify(data));
+		});
+	}); */
+	
+	/*using when, invoking all parally*/
+	
+	$(document).ready(function(){
+		
+		var onePromise=$.get("1.json");
+		var twoPromise=$.get("2.json");
+		var threePromise=$.get("3.json");
+		
+		$.when(onePromise,twoPromise,threePromise).done(function(onedata,twodata,threedata){
+			$("#messageTwo").html(JSON.stringify(onedata[0]));
+			$("#messageThree").html(JSON.stringify(twodata[0]));
+			$("#messageFour").html(JSON.stringify(threedata[0]));	
+		});
+	});
+</script>
+<body>
+<div id="messageOne">
+    
+</div>
+<div id="messageTwo">
+    
+</div>
+<div id="messageThree">
+    
+</div>
+<div id="messageFour">
+    
+</div>
+</body>
+</html>
